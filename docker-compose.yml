@@ -1,0 +1,18 @@
+services:
+  rds:
+    env_file:
+      - ./.env
+    image: "postgres:16"
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - "./.DS_Store:/var/lib/postgresql/data"
+  ec2:
+    build: .
+    depends_on:
+      - rds
+    env_file:
+      - ./.env
+    ports:
+      - "8080:8080"
